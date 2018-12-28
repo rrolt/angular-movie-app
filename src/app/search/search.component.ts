@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MoviesService } from '../core/services/movies.service';
 import { FormBuilder } from '@angular/forms';
 import { filter, debounceTime, switchMap } from 'rxjs/operators';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -18,9 +19,9 @@ export class SearchComponent implements OnInit {
       .get('term')
       .valueChanges.pipe(
         debounceTime(500),
-        filter(term => term.length),
-        switchMap(term => this.moviesService.search(term))
+        filter(value => value.length > 2)
       )
+      .pipe(switchMap(term => this.moviesService.search(term)))
       .subscribe();
   }
 
