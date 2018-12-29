@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchModule } from './search/search.module';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    MatCardModule,
     SearchModule
   ],
   providers: [],

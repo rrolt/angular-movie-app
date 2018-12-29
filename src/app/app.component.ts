@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Movie } from './core/models/movies.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-movie-app';
+  movies: Movie[];
+
+  onMoviesChange(movies: Movie[]) {
+    this.movies = movies;
+  }
 }

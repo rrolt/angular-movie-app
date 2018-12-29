@@ -22,7 +22,7 @@ export class SearchComponent {
   private results(): Observable<Movie[]> {
     return this.searchForm.controls.term.valueChanges
       .pipe(
-        debounceTime(500),
+        debounceTime(200),
         filter(value => value.length > 2)
       )
       .pipe(

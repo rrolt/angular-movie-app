@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
-    <app-search></app-search>
+    <app-search (resultsChanged)="onMoviesChange($event)"></app-search>
+
+    <mat-card *ngFor="let movie of movies">{{ movie.Title }}</mat-card>
   </body>
 </html>
