@@ -1,9 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MoviesService } from '../core/services/movies.service';
 import { FormBuilder } from '@angular/forms';
-import { filter, debounceTime, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, debounce } from 'rxjs/operators';
 import { Movie } from '../core/models/movies.model';
-import { Observable } from 'rxjs';
+import { Observable, timer, of } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -21,12 +21,11 @@ export class SearchComponent {
 
   private results(): Observable<Movie[]> {
     return this.searchForm.controls.term.valueChanges
+      .pipe(debounce(value => (value.length > 2 ? timer(200) : timer(0))))
       .pipe(
-        debounceTime(200),
-        filter(value => value.length > 2)
-      )
-      .pipe(
-        switchMap(term => this.moviesService.search(term)),
+        switchMap(term =>
+          term.length > 2 ? this.moviesService.search(term) : of([])
+        ),
         tap(movies => this.resultsChanged.emit(movies))
       );
   }
