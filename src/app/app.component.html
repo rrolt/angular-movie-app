@@ -8,7 +8,6 @@
   </head>
   <body>
     <app-search (resultsChanged)="onMoviesChange($event)"></app-search>
-
-    <mat-card *ngFor="let movie of movies">{{ movie.Title }}</mat-card>
+    <app-movies-list [movies]="movies"></app-movies-list>
   </body>
 </html>

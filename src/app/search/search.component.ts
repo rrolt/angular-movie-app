@@ -1,9 +1,9 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { MoviesService } from '../core/services/movies.service';
-import { FormBuilder } from '@angular/forms';
 import { switchMap, tap, debounce } from 'rxjs/operators';
 import { Movie } from '../core/models/movies.model';
 import { Observable, timer, of } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-search',

@@ -6,16 +6,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchModule } from './search/search.module';
 import { HttpClientModule } from '@angular/common/http';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatGridListModule } from '@angular/material';
+import { MoviesListComponent } from './movies/movies-list/movies-list.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MoviesListComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     MatCardModule,
+    MatGridListModule,
     SearchModule
   ],
   providers: [],

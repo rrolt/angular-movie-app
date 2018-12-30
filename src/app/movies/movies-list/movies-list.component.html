@@ -1,0 +1,7 @@
+<mat-grid-list cols="4" rowHeight="2:1">
+  <mat-grid-tile *ngFor="let movie of movies"
+    ><img [src]="movie.Poster" [alt]="movie.Title" /><mat-grid-tile-footer>{{
+      movie.Title
+    }}</mat-grid-tile-footer></mat-grid-tile
+  >
+</mat-grid-list>
