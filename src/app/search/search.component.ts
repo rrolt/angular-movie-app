@@ -1,9 +1,11 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { MoviesService } from '../core/services/movies.service';
 import { switchMap, tap, debounce } from 'rxjs/operators';
 import { Movie } from '../core/models/movies.model';
 import { Observable, timer, of } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { Update } from '../core/actions/search.actions';
 
 @Component({
   selector: 'app-search',
@@ -11,11 +13,13 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  @Output() resultsChanged = new EventEmitter<Movie[]>();
-
   searchForm = this.fb.group({ term: [''] });
 
-  constructor(private moviesService: MoviesService, private fb: FormBuilder) {
+  constructor(
+    private store: Store<{ search: Movie[] }>,
+    private moviesService: MoviesService,
+    private fb: FormBuilder
+  ) {
     this.results().subscribe();
   }
 
@@ -26,7 +30,7 @@ export class SearchComponent {
         switchMap(term =>
           term.length > 2 ? this.moviesService.search(term) : of([])
         ),
-        tap(movies => this.resultsChanged.emit(movies))
+        tap(results => this.store.dispatch(new Update(results)))
       );
   }
 }
