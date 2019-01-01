@@ -6,6 +6,7 @@ import { Observable, timer, of } from 'rxjs';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Update } from '../core/actions/search.actions';
+import { AppState } from '../core/models/state.model';
 
 @Component({
   selector: 'app-search',
@@ -14,9 +15,10 @@ import { Update } from '../core/actions/search.actions';
 })
 export class SearchComponent {
   searchForm = this.fb.group({ term: [''] });
+  minValueLength = 2;
 
   constructor(
-    private store: Store<{ search: Movie[] }>,
+    private store: Store<AppState>,
     private moviesService: MoviesService,
     private fb: FormBuilder
   ) {
@@ -25,10 +27,16 @@ export class SearchComponent {
 
   private results(): Observable<Movie[]> {
     return this.searchForm.controls.term.valueChanges
-      .pipe(debounce(value => (value.length > 2 ? timer(200) : timer(0))))
+      .pipe(
+        debounce(value =>
+          value.length > this.minValueLength ? timer(200) : timer(0)
+        )
+      )
       .pipe(
         switchMap(term =>
-          term.length > 2 ? this.moviesService.search(term) : of([])
+          term.length > this.minValueLength
+            ? this.moviesService.search(term)
+            : of([])
         ),
         tap(results => this.store.dispatch(new Update(results)))
       );
