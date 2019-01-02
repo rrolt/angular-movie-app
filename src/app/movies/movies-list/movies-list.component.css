@@ -1,8 +1,5 @@
-mat-grid-tile-footer {
-  background: none;
-  text-align: left;
-}
-
-img {
-  width: 100%;
+div {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }

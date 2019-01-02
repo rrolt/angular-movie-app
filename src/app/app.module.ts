@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { SearchModule } from './search/search.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule, MatGridListModule } from '@angular/material';
-import { MoviesListComponent } from './movies/movies-list/movies-list.component';
-
 import { StoreModule } from '@ngrx/store';
 import { searchReducer } from './core/reducers/search.reducer';
+import { MoviesModule } from './movies/movies.module';
 
 @NgModule({
-  declarations: [AppComponent, MoviesListComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -21,6 +20,7 @@ import { searchReducer } from './core/reducers/search.reducer';
     MatCardModule,
     MatGridListModule,
     SearchModule,
+    MoviesModule,
     StoreModule.forRoot({ search: searchReducer })
   ],
   providers: [],
