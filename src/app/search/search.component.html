@@ -1,10 +1,8 @@
 <form [formGroup]="searchForm">
-  <mat-form-field>
-    <input
-      matInput
-      type="search"
-      formControlName="term"
-      placeholder="search movie"
-    />
-  </mat-form-field>
+  <input
+    type="search"
+    formControlName="term"
+    [autofocus]="autoFocus"
+    placeholder="search movie"
+  />
 </form>

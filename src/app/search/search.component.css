@@ -1,0 +1,12 @@
+input {
+  background: #1f1f1f;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 300;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}

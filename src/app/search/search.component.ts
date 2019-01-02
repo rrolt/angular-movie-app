@@ -15,7 +15,10 @@ import { AppState } from '../core/models/state.model';
 })
 export class SearchComponent {
   searchForm = this.fb.group({ term: [''] });
+
   minValueLength = 2;
+
+  autoFocus = true;
 
   constructor(
     private store: Store<AppState>,
