@@ -1,1 +1,12 @@
-<img *ngIf="movie" [src]="movie.Poster" [alt]="movie.Title" />
+<div *ngIf="movie" class="container">
+  <div class="inner">
+    <div
+      class="front"
+      [style.backgroundImage]="'url(' + movie.Poster + ')'"
+    ></div>
+    <div class="back" [style.backgroundImage]="'url(' + movie.Poster + ')'">
+      <h2>{{ movie.Title }}</h2>
+      <mat-icon>favorite</mat-icon>
+    </div>
+  </div>
+</div>
