@@ -1,14 +1,18 @@
 <div *ngIf="movie" class="container">
   <div class="inner">
-    <div
-      class="front"
-      [style.backgroundImage]="'url(' + movie.Poster + ')'"
-    ></div>
+    <div class="front" [style.backgroundImage]="'url(' + movie.Poster + ')'">
+      <div class="preview" *ngIf="favorite">
+        <div class="corner"></div>
+        <mat-icon class="fav">favorite</mat-icon>
+      </div>
+    </div>
 
     <div class="back">
       <div class="content">
         <h2>{{ movie.Title }}</h2>
-        <mat-icon>favorite</mat-icon>
+        <mat-icon (click)="favorite = !favorite" [class.active]="favorite"
+          >favorite</mat-icon
+        >
       </div>
       <div
         class="cover"

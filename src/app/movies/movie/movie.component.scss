@@ -1,0 +1,121 @@
+.container {
+  width: calc((100vw / 5) - 10px);
+  height: 380px;
+  perspective: 1000px;
+  background-color: transparent;
+
+  &:hover {
+    .inner {
+      transform: rotateY(180deg);
+    }
+  }
+
+  .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+
+  .front,
+  .back {
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  .front {
+    background-position: center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+
+    .preview {
+      .corner,
+      .fav {
+        position: absolute;
+      }
+      .corner {
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 80px 80px 0;
+        border-color: transparent #f7f7f7 transparent transparent;
+        opacity: 0.95;
+      }
+
+      .fav {
+        top: 0;
+        right: 0;
+        top: 12px;
+        right: 12px;
+        font-size: 28px;
+        color: #ff7272;
+      }
+    }
+  }
+
+  .back {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+    background-color: #1f1f1f;
+    color: #fff9fc;
+    width: 100%;
+    height: 100%;
+
+    h2 {
+      font-weight: 100;
+      font-size: 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .content {
+      position: fixed;
+      z-index: 2;
+      height: 100%;
+      width: 100%;
+    }
+
+    .cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      filter: grayscale(1);
+      box-shadow: 0 0 0 200px rgba(0, 0, 0, 0.9) inset;
+      background-position: center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      z-index: 1;
+    }
+
+    mat-icon {
+      height: 40px;
+      width: 40px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 40px;
+      margin: auto;
+      transition: color 0.3s ease;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        color: #ff7272;
+      }
+    }
+  }
+}

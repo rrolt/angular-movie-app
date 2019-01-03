@@ -5,8 +5,8 @@ input {
   font-size: 15px;
   font-weight: 300;
   border: none;
-}
 
-input:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
