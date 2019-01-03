@@ -1,6 +1,5 @@
-<div>
-  <app-movie
-    *ngFor="let movie of (movies$ | async)"
-    [movie]="movie"
-  ></app-movie>
-</div>
+<ng-container *ngIf="(movies$ | async) as movies">
+  <div [@listAnimation]="movies.length">
+    <app-movie *ngFor="let movie of movies" [movie]="movie"></app-movie>
+  </div>
+</ng-container>
