@@ -1,8 +1,12 @@
-@import 'https://fonts.googleapis.com/css?family=Lato|Material+Icons';
+@import 'https://fonts.googleapis.com/css?family=Muli|Material+Icons';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 body {
   text-align: center;
-  font-family: Lato;
   background: #000;
+}
+
+body,
+input {
+  font-family: Muli;
 }
