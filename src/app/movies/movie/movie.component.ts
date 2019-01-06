@@ -14,6 +14,11 @@ export class MovieComponent {
   constructor(private moviesService: MoviesService) {}
 
   fav(movie: Movie) {
-    this.moviesService.addToFavorites(movie);
+    this.favorite = true;
+
+    this.moviesService
+      .create(movie)
+      .then(() => this.moviesService.addToFavorites(movie))
+      .catch(() => (this.favorite = false));
   }
 }

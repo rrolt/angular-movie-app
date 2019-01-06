@@ -5,31 +5,39 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Movie } from '../models/movies.model';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { UserService } from './user.service';
+import { userInfo } from 'os';
 
 @Injectable()
 export class MoviesService {
-  private apiKey = environment.omdb.apiKey;
+  private searchUrl = `http://www.omdbapi.com/?apikey=${
+    environment.omdb.apiKey
+  }`;
 
-  private rootUrl = `http://www.omdbapi.com/?apikey=${this.apiKey}&`;
-
-  constructor(private http: HttpClient, private db: AngularFirestore) {}
+  constructor(
+    private http: HttpClient,
+    private db: AngularFirestore,
+    private user: UserService
+  ) {}
 
   search(term: string): Observable<Movie[]> {
     return this.http
-      .get<SearchResponse>(`${this.rootUrl}s=${term}`)
+      .get<SearchResponse>(`${this.searchUrl}&s=${term}`)
       .pipe(map(response => response.Search));
   }
 
   create(movie: Movie) {
-    this.db
+    return this.db
       .collection('movies')
       .doc(movie.imdbID)
-      .set(movie)
-      .catch(error => console.error('Error adding movie: ', error));
+      .set(movie);
   }
 
   addToFavorites(movie: Movie) {
-    this.create(movie);
+    return this.db.collection('favorites').add({
+      userToken: this.user.getToken(),
+      imdbID: movie.imdbID
+    });
   }
 }
 
