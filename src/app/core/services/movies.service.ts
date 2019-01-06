@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { Movie } from '../models/movies.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from './user.service';
-import { userInfo } from 'os';
 
 @Injectable()
 export class MoviesService {
@@ -14,11 +13,7 @@ export class MoviesService {
     environment.omdb.apiKey
   }`;
 
-  constructor(
-    private http: HttpClient,
-    private db: AngularFirestore,
-    private user: UserService
-  ) {}
+  constructor(private http: HttpClient, private db: AngularFirestore) {}
 
   search(term: string): Observable<Movie[]> {
     return this.http
@@ -31,13 +26,6 @@ export class MoviesService {
       .collection('movies')
       .doc(movie.imdbID)
       .set(movie);
-  }
-
-  addToFavorites(movie: Movie) {
-    return this.db.collection('favorites').add({
-      userToken: this.user.getToken(),
-      imdbID: movie.imdbID
-    });
   }
 }
 

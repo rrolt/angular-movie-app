@@ -12,6 +12,8 @@ import {
   query,
   keyframes
 } from '@angular/animations';
+import { UserService } from 'src/app/core/services/user.service';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-movies-list',
@@ -47,7 +49,7 @@ import {
 export class MoviesListComponent {
   movies$: Observable<Movie[]>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppState>, private user: UserService) {
     this.movies$ = this.store.pipe(select('search'));
   }
 }
