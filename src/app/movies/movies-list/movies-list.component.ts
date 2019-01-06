@@ -48,7 +48,8 @@ import { Favorite } from 'src/app/core/models/favorites.model';
 })
 export class MoviesListComponent {
   movies$: Observable<Movie[]>;
-  favorites: Favorite[];
+
+  favorites: Favorite[] = [];
 
   constructor(private store: Store<AppState>, private user: UserService) {
     this.movies$ = this.store.select('search');
