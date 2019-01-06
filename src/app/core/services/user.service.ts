@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Movie } from '../models/movies.model';
+import { Favorite } from '../models/favorites.model';
+import { flatMap, map } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -16,16 +19,29 @@ export class UserService {
   }
 
   addFavorite(movie: Movie) {
-    return this.db.collection('favorites').add({
-      userToken: this.token,
-      imdbID: movie.imdbID
-    });
+    return this.db
+      .collection(`users/${this.token}/favorites`)
+      .doc(movie.imdbID)
+      .set({
+        imdbID: movie.imdbID
+      });
   }
 
   getFavorites() {
     return this.db
-      .collection('favorites', ref => ref.where('userToken', '==', this.token))
-      .valueChanges();
+      .collection<Favorite>(`users/${this.token}/favorites`)
+      .valueChanges()
+      .pipe(
+        map(favorites =>
+          favorites.map(favorite =>
+            this.db
+              .collection<Movie>('movies')
+              .doc(favorite.imdbID)
+              .valueChanges()
+          )
+        )
+      )
+      .pipe(flatMap(observables => combineLatest(observables)));
   }
 
   private generateToken() {
