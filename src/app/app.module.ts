@@ -11,6 +11,7 @@ import { searchReducer } from './core/reducers/search.reducer';
 import { MoviesModule } from './movies/movies.module';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +25,8 @@ import { environment } from 'src/environments/environment';
     SearchModule,
     MoviesModule,
     StoreModule.forRoot({ search: searchReducer }),
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

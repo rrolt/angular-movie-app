@@ -11,7 +11,7 @@
       <div class="content">
         <h2>{{ movie.Title }}</h2>
         <span class="year">{{ movie.Year }}</span>
-        <mat-icon (click)="favorite = !favorite" [class.active]="favorite"
+        <mat-icon (click)="fav(movie)" [class.active]="favorite"
           >favorite</mat-icon
         >
       </div>

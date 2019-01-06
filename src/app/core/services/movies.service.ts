@@ -23,8 +23,13 @@ export class MoviesService {
   create(movie: Movie) {
     this.db
       .collection('movies')
-      .add(movie)
+      .doc(movie.imdbID)
+      .set(movie)
       .catch(error => console.error('Error adding movie: ', error));
+  }
+
+  addToFavorites(movie: Movie) {
+    this.create(movie);
   }
 }
 
