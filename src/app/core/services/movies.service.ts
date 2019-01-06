@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Movie } from '../models/movies.model';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable()
 export class MoviesService {
@@ -11,12 +12,19 @@ export class MoviesService {
 
   private rootUrl = `http://www.omdbapi.com/?apikey=${this.apiKey}&`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private db: AngularFirestore) {}
 
   search(term: string): Observable<Movie[]> {
     return this.http
       .get<SearchResponse>(`${this.rootUrl}s=${term}`)
       .pipe(map(response => response.Search));
+  }
+
+  create(movie: Movie) {
+    this.db
+      .collection('movies')
+      .add(movie)
+      .catch(error => console.error('Error adding movie: ', error));
   }
 }
 

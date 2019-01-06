@@ -9,6 +9,8 @@ import { MatCardModule, MatGridListModule } from '@angular/material';
 import { StoreModule } from '@ngrx/store';
 import { searchReducer } from './core/reducers/search.reducer';
 import { MoviesModule } from './movies/movies.module';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,7 +23,8 @@ import { MoviesModule } from './movies/movies.module';
     MatGridListModule,
     SearchModule,
     MoviesModule,
-    StoreModule.forRoot({ search: searchReducer })
+    StoreModule.forRoot({ search: searchReducer }),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [],
   bootstrap: [AppComponent]
