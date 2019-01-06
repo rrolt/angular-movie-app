@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Movie } from '../models/movies.model';
 import { Favorite } from '../models/favorites.model';
 import { flatMap, map } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -14,12 +14,12 @@ export class UserService {
     localStorage.setItem('userToken', this.token);
   }
 
-  getToken() {
+  getToken(): string {
     return this.token;
   }
 
   addFavorite(movie: Movie) {
-    return this.db
+    this.db
       .collection(`users/${this.token}/favorites`)
       .doc(movie.imdbID)
       .set({
@@ -27,7 +27,7 @@ export class UserService {
       });
   }
 
-  getFavorites() {
+  getFavorites(): Observable<Movie[]> {
     return this.db
       .collection<Favorite>(`users/${this.token}/favorites`)
       .valueChanges()
@@ -35,8 +35,8 @@ export class UserService {
         map(favorites =>
           favorites.map(favorite =>
             this.db
-              .collection<Movie>('movies')
-              .doc(favorite.imdbID)
+              .collection('movies')
+              .doc<Movie>(favorite.imdbID)
               .valueChanges()
           )
         )

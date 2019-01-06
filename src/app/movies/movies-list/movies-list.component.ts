@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Movie } from 'src/app/core/models/movies.model';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/core/models/state.model';
 import {
@@ -13,7 +13,7 @@ import {
   keyframes
 } from '@angular/animations';
 import { UserService } from 'src/app/core/services/user.service';
-import { flatMap } from 'rxjs/operators';
+import { Favorite } from 'src/app/core/models/favorites.model';
 
 @Component({
   selector: 'app-movies-list',
@@ -48,8 +48,21 @@ import { flatMap } from 'rxjs/operators';
 })
 export class MoviesListComponent {
   movies$: Observable<Movie[]>;
+  favorites: Favorite[];
 
   constructor(private store: Store<AppState>, private user: UserService) {
-    this.movies$ = this.store.pipe(select('search'));
+    this.movies$ = this.store.select('search');
+
+    this.user
+      .getFavorites()
+      .subscribe(favorites => (this.favorites = favorites));
+  }
+
+  isFavorite(movie: Movie): boolean {
+    if (this.favorites.find(favorite => favorite.imdbID === movie.imdbID)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

@@ -10,7 +10,7 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class MovieComponent {
   @Input() movie: Movie;
-  favorite = false;
+  @Input() favorite: boolean;
 
   constructor(
     private moviesService: MoviesService,
@@ -18,11 +18,9 @@ export class MovieComponent {
   ) {}
 
   fav(movie: Movie) {
-    this.favorite = true;
-
     this.moviesService
       .create(movie)
       .then(() => this.user.addFavorite(movie))
-      .catch(() => (this.favorite = false));
+      .catch(err => console.log(err));
   }
 }
