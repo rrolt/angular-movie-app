@@ -13,6 +13,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { UserService } from './core/services/user.service';
+import { NavModule } from './nav/nav.module';
+import { navReducer } from './core/reducers/nav.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,8 +26,9 @@ import { UserService } from './core/services/user.service';
     MatCardModule,
     MatGridListModule,
     SearchModule,
+    NavModule,
     MoviesModule,
-    StoreModule.forRoot({ search: searchReducer }),
+    StoreModule.forRoot({ search: searchReducer, nav: navReducer }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
   ],

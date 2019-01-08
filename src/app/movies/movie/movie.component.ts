@@ -17,10 +17,14 @@ export class MovieComponent {
     private user: UserService
   ) {}
 
-  fav(movie: Movie) {
-    this.moviesService
-      .create(movie)
-      .then(() => this.user.addFavorite(movie))
-      .catch(err => console.log(err));
+  toggleFavorite(movie: Movie) {
+    if (this.favorite) {
+      this.user.deleteFavorite(movie).catch(err => console.log(err));
+    } else {
+      this.moviesService
+        .create(movie)
+        .then(() => this.user.addFavorite(movie))
+        .catch(err => console.log(err));
+    }
   }
 }
