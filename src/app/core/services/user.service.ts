@@ -14,6 +14,7 @@ export class UserService {
 
   constructor(private db: AngularFirestore) {
     this.token = localStorage.getItem('userToken') || this.generateToken();
+    localStorage.setItem('userToken', this.token);
   }
 
   getToken(): string {
