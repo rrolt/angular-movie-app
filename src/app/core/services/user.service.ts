@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
 import { Movie } from '../models/movies.model';
 import { Favorite } from '../models/favorites.model';
 import { flatMap, map } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable()
 export class UserService {
@@ -17,11 +14,7 @@ export class UserService {
     localStorage.setItem('userToken', this.token);
   }
 
-  getToken(): string {
-    return this.token;
-  }
-
-  addFavorite(movie: Movie) {
+  addFavorite(movie: Movie): Promise<void> {
     return this.favoritesCollection()
       .doc(movie.imdbID)
       .set({
@@ -29,7 +22,7 @@ export class UserService {
       });
   }
 
-  deleteFavorite(movie: Movie) {
+  deleteFavorite(movie: Movie): Promise<void> {
     return this.favoritesCollection()
       .doc(movie.imdbID)
       .delete();
@@ -58,7 +51,7 @@ export class UserService {
       .collection('favorites');
   }
 
-  private generateToken() {
+  private generateToken(): string {
     return (
       Math.random()
         .toString(36)

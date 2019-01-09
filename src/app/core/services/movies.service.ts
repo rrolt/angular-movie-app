@@ -21,7 +21,7 @@ export class MoviesService {
       .pipe(map(response => response.Search));
   }
 
-  create(movie: Movie) {
+  create(movie: Movie): Promise<void> {
     return this.db
       .collection('movies')
       .doc(movie.imdbID)

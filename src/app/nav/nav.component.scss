@@ -7,7 +7,18 @@ button {
     outline: none;
   }
 
+  &.active {
+    mat-icon {
+      color: #ec7678;
+    }
+  }
+
   mat-icon {
     color: #fff;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #ec7678;
+    }
   }
 }

@@ -3,15 +3,7 @@ import { Movie } from 'src/app/core/models/movies.model';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { AppState } from 'src/app/core/models/state.model';
-import {
-  trigger,
-  transition,
-  stagger,
-  animate,
-  style,
-  query,
-  keyframes
-} from '@angular/animations';
+import { trigger, transition, stagger, animate, style, query, keyframes } from '@angular/animations';
 import { UserService } from 'src/app/core/services/user.service';
 import { Favorite } from 'src/app/core/models/favorites.model';
 
@@ -23,7 +15,6 @@ import { Favorite } from 'src/app/core/models/favorites.model';
     trigger('listAnimation', [
       transition('* => *', [
         query(':enter', style({ opacity: 0 }), { optional: true }),
-
         query(
           ':enter',
           stagger('50ms', [
@@ -53,13 +44,10 @@ export class MoviesListComponent {
 
   constructor(private store: Store<AppState>, private user: UserService) {
     this.store.select('nav').subscribe(nav => {
-      this.movies$ =
-        nav === 'favorite' ? of(this.favorites) : this.store.select('search');
+      this.movies$ = nav === 'favorite' ? of(this.favorites) : this.store.select('search');
     });
 
-    this.user
-      .getFavorites()
-      .subscribe(favorites => (this.favorites = favorites));
+    this.user.getFavorites().subscribe(favorites => (this.favorites = favorites));
   }
 
   isFavorite(movie: Movie): boolean {
