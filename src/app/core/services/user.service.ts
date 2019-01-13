@@ -11,7 +11,6 @@ export class UserService {
 
   constructor(private db: AngularFirestore) {
     this.token = localStorage.getItem('userToken') || this.generateToken();
-    localStorage.setItem('userToken', this.token);
   }
 
   addFavorite(movie: Movie): Promise<void> {
@@ -31,17 +30,8 @@ export class UserService {
   getFavorites(): Observable<Movie[]> {
     return this.favoritesCollection()
       .valueChanges()
-      .pipe(
-        map(favorites =>
-          favorites.map(favorite =>
-            this.db
-              .collection('movies')
-              .doc<Movie>(favorite.imdbID)
-              .valueChanges()
-          )
-        )
-      )
-      .pipe(flatMap(observables => combineLatest(observables)));
+      .pipe(map(favorites => favorites.map(fav => this.getFavoriteMovie(fav.imdbID))))
+      .pipe(flatMap(observables$ => combineLatest(observables$)));
   }
 
   private favoritesCollection(): AngularFirestoreCollection<Favorite> {
@@ -51,14 +41,24 @@ export class UserService {
       .collection('favorites');
   }
 
+  private getFavoriteMovie(imdbID: string): Observable<Movie> {
+    return this.db
+      .collection('movies')
+      .doc<Movie>(imdbID)
+      .valueChanges();
+  }
+
   private generateToken(): string {
-    return (
+    const token =
       Math.random()
         .toString(36)
         .substring(2, 15) +
       Math.random()
         .toString(36)
-        .substring(2, 15)
-    );
+        .substring(2, 15);
+
+    localStorage.setItem('userToken', token);
+
+    return token;
   }
 }
