@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../models/movies.model';
 import { Favorite } from '../models/favorites.model';
-import { flatMap, map } from 'rxjs/operators';
-import { combineLatest, Observable } from 'rxjs';
+import { flatMap, map, filter } from 'rxjs/operators';
+import { combineLatest, Observable, merge } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable()
@@ -28,10 +28,16 @@ export class UserService {
   }
 
   getFavorites(): Observable<Movie[]> {
-    return this.favoritesCollection()
-      .valueChanges()
-      .pipe(map(favorites => favorites.map(fav => this.getFavoriteMovie(fav.imdbID))))
-      .pipe(flatMap(observables$ => combineLatest(observables$)));
+    const favorites$ = this.favoritesCollection().valueChanges();
+
+    return merge(
+      favorites$.pipe(
+        filter(favorites => favorites.length > 0),
+        map(favorites => favorites.map(fav => this.getFavoriteMovie(fav.imdbID))),
+        flatMap(observables$ => combineLatest(observables$))
+      ),
+      favorites$.pipe(filter(favorites => favorites.length === 0)) as Observable<Movie[]>
+    );
   }
 
   private favoritesCollection(): AngularFirestoreCollection<Favorite> {

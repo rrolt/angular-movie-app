@@ -12,10 +12,7 @@ export class MovieComponent {
   @Input() movie: Movie;
   @Input() favorite: boolean;
 
-  constructor(
-    private moviesService: MoviesService,
-    private user: UserService
-  ) {}
+  constructor(private moviesService: MoviesService, private user: UserService) {}
 
   toggleFavorite(movie: Movie) {
     if (this.favorite) {
