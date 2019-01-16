@@ -9,16 +9,12 @@ import { UserService } from './user.service';
 
 @Injectable()
 export class MoviesService {
-  private searchUrl = `http://www.omdbapi.com/?apikey=${
-    environment.omdb.apiKey
-  }`;
+  private searchUrl = `http://www.omdbapi.com/?apikey=${environment.omdb.apiKey}`;
 
   constructor(private http: HttpClient, private db: AngularFirestore) {}
 
   search(term: string): Observable<Movie[]> {
-    return this.http
-      .get<SearchResponse>(`${this.searchUrl}&s=${term}`)
-      .pipe(map(response => response.Search));
+    return this.http.get<SearchResponse>(`${this.searchUrl}&s=${term}`).pipe(map(response => response.Search));
   }
 
   create(movie: Movie): Promise<void> {

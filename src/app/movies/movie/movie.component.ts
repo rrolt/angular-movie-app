@@ -10,17 +10,16 @@ import { UserService } from 'src/app/core/services/user.service';
 })
 export class MovieComponent {
   @Input() movie: Movie;
-  @Input() favorite: boolean;
 
   constructor(private moviesService: MoviesService, private user: UserService) {}
 
-  toggleFavorite(movie: Movie) {
-    if (this.favorite) {
-      this.user.deleteFavorite(movie).catch(err => console.log(err));
+  toggleFavorite() {
+    if (this.movie.favorite) {
+      this.user.deleteFavorite(this.movie).catch(err => console.log(err));
     } else {
       this.moviesService
-        .create(movie)
-        .then(() => this.user.addFavorite(movie))
+        .create(this.movie)
+        .then(() => this.user.addFavorite(this.movie))
         .catch(err => console.log(err));
     }
   }

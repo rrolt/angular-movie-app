@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { Movie } from 'src/app/core/models/movies.model';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/core/models/state.model';
 import { trigger, transition, stagger, animate, style, query, keyframes } from '@angular/animations';
 import { UserService } from 'src/app/core/services/user.service';
-import { Favorite } from 'src/app/core/models/favorites.model';
 
 @Component({
   selector: 'app-movies-list',
@@ -38,23 +37,20 @@ import { Favorite } from 'src/app/core/models/favorites.model';
   ]
 })
 export class MoviesListComponent {
-  movies$: Observable<Movie[] | Favorite[]>;
-
-  favorites: Favorite[] = [];
+  movies$: Observable<Movie[]>;
 
   constructor(private store: Store<AppState>, private user: UserService) {
-    this.store.select('nav').subscribe(nav => {
-      this.movies$ = nav === 'favorite' ? of(this.favorites) : this.store.select('search');
-    });
-
-    this.user.getFavorites().subscribe(favorites => (this.favorites = favorites));
+    this.store
+      .select('nav')
+      .subscribe(nav => (this.movies$ = nav === 'favorite' ? this.user.getFavorites() : this.getMoviesWithFavorites()));
   }
 
-  isFavorite(movie: Movie): boolean {
-    if (this.favorites.find(fav => fav.imdbID === movie.imdbID)) {
-      return true;
-    } else {
-      return false;
-    }
+  private getMoviesWithFavorites() {
+    return combineLatest(this.store.select('search'), this.user.getFavorites(), (movies, favorites) =>
+      movies.map(movie => {
+        movie.favorite = favorites.find(fav => fav.imdbID === movie.imdbID) ? true : false;
+        return movie;
+      })
+    );
   }
 }

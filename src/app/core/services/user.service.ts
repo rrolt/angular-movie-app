@@ -34,7 +34,8 @@ export class UserService {
       favorites$.pipe(
         filter(favorites => favorites.length > 0),
         map(favorites => favorites.map(fav => this.getFavoriteMovie(fav.imdbID))),
-        flatMap(observables$ => combineLatest(observables$))
+        flatMap(observables$ => combineLatest(observables$)),
+        map(movies => movies.map(movie => ({ ...movie, ...{ favorite: true } })))
       ),
       favorites$.pipe(filter(favorites => favorites.length === 0)) as Observable<Movie[]>
     );
