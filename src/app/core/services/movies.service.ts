@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Movie } from '../models/movies.model';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { UserService } from './user.service';
 
 @Injectable()
 export class MoviesService {
