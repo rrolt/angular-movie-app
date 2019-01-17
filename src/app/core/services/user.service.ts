@@ -2,15 +2,19 @@ import { Injectable } from '@angular/core';
 import { Movie } from '../models/movies.model';
 import { Favorite } from '../models/favorites.model';
 import { flatMap, map, filter } from 'rxjs/operators';
-import { combineLatest, Observable, merge } from 'rxjs';
+import { combineLatest, Observable, merge, BehaviorSubject } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable()
 export class UserService {
+  favorites$ = new BehaviorSubject<Movie[]>([]);
+
   private token: string;
 
   constructor(private db: AngularFirestore) {
     this.token = localStorage.getItem('userToken') || this.generateToken();
+
+    this.getFavorites().subscribe(favorites => this.favorites$.next(favorites)); // Will be implemented in store soon
   }
 
   addFavorite(movie: Movie): Promise<void> {

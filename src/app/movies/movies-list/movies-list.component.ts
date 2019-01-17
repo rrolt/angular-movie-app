@@ -3,7 +3,15 @@ import { Movie } from 'src/app/core/models/movies.model';
 import { Store } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { AppState } from 'src/app/core/models/state.model';
-import { trigger, transition, stagger, animate, style, query, keyframes } from '@angular/animations';
+import {
+  trigger,
+  transition,
+  stagger,
+  animate,
+  style,
+  query,
+  keyframes
+} from '@angular/animations';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -42,11 +50,14 @@ export class MoviesListComponent {
   constructor(private store: Store<AppState>, private user: UserService) {
     this.store
       .select('nav')
-      .subscribe(nav => (this.movies$ = nav === 'favorite' ? this.user.getFavorites() : this.getMoviesWithFavorites()));
+      .subscribe(
+        nav =>
+          (this.movies$ = nav === 'favorite' ? this.user.favorites$ : this.getMoviesFromSearch())
+      );
   }
 
-  private getMoviesWithFavorites() {
-    return combineLatest(this.store.select('search'), this.user.getFavorites(), (movies, favorites) =>
+  private getMoviesFromSearch(): Observable<Movie[]> {
+    return combineLatest(this.store.select('search'), this.user.favorites$, (movies, favorites) =>
       movies.map(movie => {
         movie.favorite = favorites.find(fav => fav.imdbID === movie.imdbID) ? true : false;
         return movie;
