@@ -104,22 +104,31 @@
       z-index: 1;
     }
 
-    mat-icon {
-      height: 40px;
-      width: 40px;
+    .actions {
       position: absolute;
+      display: flex;
+      justify-content: space-between;
+      margin: auto;
+      width: 165px;
+      height: 0;
       top: 0;
       bottom: 0;
       left: 0;
       right: 0;
-      font-size: 40px;
-      margin: auto;
-      transition: color 0.3s ease;
-      cursor: pointer;
 
-      &:hover,
-      &.active {
-        color: #ec7678;
+      mat-icon {
+        color: #d2d2d2;
+        height: 33px;
+        width: 33px;
+        font-size: 33px;
+        margin-top: 15px;
+        transition: color 0.3s ease;
+        cursor: pointer;
+
+        &:hover,
+        &.active {
+          color: #ec7678;
+        }
       }
     }
   }

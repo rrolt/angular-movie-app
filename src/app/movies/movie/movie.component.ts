@@ -11,6 +11,8 @@ import { UserService } from 'src/app/core/services/user.service';
 export class MovieComponent {
   @Input() movie: Movie;
 
+  rating: number;
+
   constructor(private moviesService: MoviesService, private user: UserService) {}
 
   toggleFavorite() {
