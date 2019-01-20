@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Movie } from '../models/movies.model';
-import { Favorite } from '../models/favorites.model';
-import { flatMap, map, filter } from 'rxjs/operators';
-import { combineLatest, Observable, merge, BehaviorSubject } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { BehaviorSubject, combineLatest, merge, Observable } from 'rxjs';
+import { filter, flatMap, map } from 'rxjs/operators';
+
+import { Favorite } from '../models/favorites.model';
+import { Movie } from '../models/movies.model';
 
 @Injectable()
 export class UserService {

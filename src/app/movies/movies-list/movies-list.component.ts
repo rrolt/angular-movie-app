@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { Movie } from 'src/app/core/models/movies.model';
-import { Store } from '@ngrx/store';
-import { Observable, combineLatest } from 'rxjs';
-import { AppState } from 'src/app/core/models/state.model';
 import {
-  trigger,
-  transition,
-  stagger,
   animate,
-  style,
+  keyframes,
   query,
-  keyframes
+  stagger,
+  style,
+  transition,
+  trigger
 } from '@angular/animations';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { combineLatest, Observable } from 'rxjs';
+import { Movie } from 'src/app/core/models/movies.model';
+import { AppState } from 'src/app/core/models/state.model';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({

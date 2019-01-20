@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { AppState } from '../core/models/state.model';
 import { Store } from '@ngrx/store';
+
 import { Select } from '../core/actions/nav.actions';
+import { AppState } from '../core/models/state.model';
 
 @Component({
   selector: 'app-nav',

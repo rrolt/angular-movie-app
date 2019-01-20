@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { MoviesService } from '../core/services/movies.service';
-import { switchMap, tap, filter, map, debounceTime } from 'rxjs/operators';
-import { Movie } from '../core/models/movies.model';
-import { Observable, merge } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { merge, Observable } from 'rxjs';
+import { debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
+
 import { Update } from '../core/actions/search.actions';
+import { Movie } from '../core/models/movies.model';
 import { AppState } from '../core/models/state.model';
+import { MoviesService } from '../core/services/movies.service';
 
 @Component({
   selector: 'app-search',

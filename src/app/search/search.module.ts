@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchComponent } from './search.component';
-import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MoviesService } from '../core/services/movies.service';
+import { SearchComponent } from './search.component';
 
 @NgModule({
   declarations: [SearchComponent],

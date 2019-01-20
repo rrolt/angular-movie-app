@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+
 import { Movie } from '../models/movies.model';
 
 export const enum SearchTypes {
